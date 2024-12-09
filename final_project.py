@@ -162,11 +162,6 @@ def evaluate_all_policies(ticker, test_start_date, test_end_date):
 
     sorted_results = sorted(results, key=lambda x: x[1], reverse=True)
 
-    # Print all results
-    print("\nAll Policies Evaluated on Test Data (Sorted by Total Return):")
-    for policy, total_return in sorted_results:
-        print(f"Policy: {policy}, Total Return: {total_return:.2f}")
-
     return sorted_results
 
 
@@ -252,7 +247,6 @@ def policy_meta_analysis():
     plt.savefig("policy_histogram.png", dpi=300)
     plt.show()
 
-    print(averaged_policy_results)
     return averaged_policy_results
 
 
@@ -268,7 +262,7 @@ if __name__ == "__main__":
 
     if goal == "stock_analysis":
         # INPUTS: ticker, training dates, and testing dates
-        ticker = "JNJ"
+        ticker = "NVDA"
         train_start_date = "2000-01-01"
         train_end_date = "2020-01-01"
         test_start_date = "2023-01-01"
@@ -279,7 +273,6 @@ if __name__ == "__main__":
 
         # Find the optimal policy using value iteration
         optimal_policy = value_iteration(T, R, threshold=0.01, gamma=0.9)
-        print(f"Optimal Policy for {ticker} is: {optimal_policy}")
 
         # Evaluate policy by comparing to all possible policies
         sorted_returns = evaluate_all_policies(ticker, test_start_date, test_end_date)
