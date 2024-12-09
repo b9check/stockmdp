@@ -58,3 +58,9 @@ Each stock's optimal policy is compared against all 27 naive policies, such as a
 Run the meta-analysis across multiple stocks:
 ```bash
 python final_project.py meta_analysis
+
+### Meta-Analysis
+Run the analysis across a single stock:
+```bash
+python final_project.py stock_analysis
+
