@@ -1,20 +1,33 @@
+# Stock Action Optimization with Markov Decision Processes
+
+## Overview
+This project uses a Markov Decision Process (MDP) to determine optimal buy, sell, or hold strategies for stocks. The approach leverages historical stock data, calculates Relative Strength Index (RSI), and applies value iteration to derive policies that maximize expected returns.
+
+## Features
+- Calculates RSI-based stock momentum states: **Oversold**, **Neutral**, **Overbought**.
+- Classifies actions as **Buy**, **Sell**, or **Hold** based on deviations from expected prices.
+- Constructs transition (T) and reward (R) matrices for a stock.
+- Applies value iteration to determine optimal policies.
+- Compares the optimal policy against 27 naive policies.
+- Includes functionality for meta-analysis across multiple stocks or single stock evaluation.
+
 ### Transition and Reward Matrices
 Using labeled weekly data, the framework builds:
 - **Transition Matrix (T):** Captures the probability of transitioning between states given a specific action. For example, the probability of transitioning from "Oversold" to "Neutral" after a "Buy" action is calculated as:
-  \[
-  T(s, a, s') = \frac{\text{Number of transitions from state } s \text{ to } s' \text{ after action } a}{\text{Total number of times action } a \text{ was taken in state } s}
-  \]
+  
+T(s, a, s') = (Number of transitions from state s to s' after action a) / (Total number of times action a was taken in state s)
+
 - **Reward Matrix (R):** Records the expected percentage price change for each state-action pair. For example, the reward for taking a "Buy" action in the "Oversold" state is calculated as the average observed percentage change in price for such occurrences.
 
 ### Value Iteration
 The framework applies **value iteration** to compute the optimal policy. This algorithm maximizes the expected long-term reward for each state:
-\[
-a^*(s) = \text{argmax}_a \left[ R(s, a) + \gamma \sum_{s'} T(s, a, s') U(s') \right]
-\]
+
+a*(s) = argmax_a [R(s, a) + γ * Σ(T(s, a, s') * U(s'))]
+
 Where:
-- \(a^*(s)\): Optimal action for state \(s\).
-- \(\gamma\): Discount factor (set to 0.9).
-- \(U(s')\): Utility of transitioning to state \(s'\).
+- `a*(s)`: Optimal action for state `s`.
+- `γ`: Discount factor (set to 0.9).
+- `U(s')`: Utility of transitioning to state `s'`.
 
 ### Policy Evaluation
 Each stock's optimal policy is compared against all 27 naive policies, such as always "Buy," "Sell," or "Hold." Total returns for each policy are calculated over the testing period.
@@ -56,11 +69,11 @@ Each stock's optimal policy is compared against all 27 naive policies, such as a
 
 ### Meta-Analysis
 Run the meta-analysis across multiple stocks:
-```bash
+
 python final_project.py meta_analysis
 
-### Meta-Analysis
+### Single-Stock-Analysis
 Run the analysis across a single stock:
-```bash
+
 python final_project.py stock_analysis
 
